@@ -1,0 +1,7 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "haskell-funcional-lagranja:lib"
+
+    - path: "./test"
+      component: "haskell-funcional-lagranja:test:haskell-funcional-lagranja-test"
