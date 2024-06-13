@@ -118,23 +118,23 @@ Animal
 -}
 
 -- 4) MEJORA O NO MEJORA
-mejoraDePeso :: [Actividad] -> Animal -> Bool
-mejoraDePeso [] animal = True
-mejoraDePeso (actividad1:actividad2:actividades) animal =
-    (peso . actividad1) animal <= (peso . actividad2) animal
-    && (peso . actividad2) animal - (peso . actividad1) animal <= 3
-    && mejoraDePeso (actividad2:actividades) animal
+-- mejoraDePeso :: [Actividad] -> Animal -> Bool
+-- mejoraDePeso [] animal = True
+-- mejoraDePeso (actividad1:actividad2:actividades) animal =
+--     (peso . actividad1) animal <= (peso . actividad2) animal
+--     && (peso . actividad2) animal - (peso . actividad1) animal <= 3
+--     && mejoraDePeso (actividad2:actividades) animal
 
--- mejoraSustentablementePeso :: Actividad -> Animal -> Bool
--- mejoraSustentablementePeso actividad animal = 
---     (peso . actividad) animal > peso animal peso
---     && (peso . actividad) animal < ((+3) . peso) animal
+mejoraSustentablementePeso :: Actividad -> Animal -> Bool
+mejoraSustentablementePeso actividad animal = 
+    (peso . actividad) animal > peso animal peso
+    && (peso . actividad) animal < ((+3) . peso) animal
 
--- mejora :: Proceso -> Animal -> Bool
--- mejora [] _ = True
--- mejora (actividad : actividades) animal =
---     mejoraSustentablementePeso actividad animal
---     && mejora actividades animal
+mejora :: Proceso -> Animal -> Bool
+mejora [] _ = True
+mejora (actividad : actividades) animal =
+    mejoraSustentablementePeso actividad animal
+    && mejora actividades animal
   
 
 -- 5) GIVE ME ONE, GIVE ME TWO
@@ -150,8 +150,8 @@ con la condición de tener un nombre falopa, y Haskell evaluará la lista de man
 perezosa para producir los resultados esperados. 
 
 Todo esto sucedera unicamente si filter logra encontrar los tres animales con nombre 
-falopa en la lista de animales. Si no lo hace, la función take no producirá ningún 
-resultado.
+falopa en la lista de animales. Hasta filtrar los tres animales con nombre falopa, 
+la función take ya le bastará de evaluar la lista de manera perezosa para producir
 
 Haskell utiliza evaluación diferida, podemos trabajar con listas infinitas de manera segura 
 siempre que nos aseguremos de que nuestras funciones converjan y no entren en un bucle infinito. 
