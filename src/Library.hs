@@ -7,8 +7,6 @@ import PdePreludat
 type Nombre = String
 type Peso = Number
 type Edad = Number
-type DiasRecuperacion = Number
-type CostoAtencion = Number
 
 data Animal = Animal {
   nombre  :: Nombre,
@@ -22,8 +20,8 @@ data Animal = Animal {
 } deriving Show
 
 data VisitaMedica = VisitaMedica {
-  diasRecuperacion :: DiasRecuperacion,
-  costoAtencion    :: CostoAtencion
+  diasRecuperacion :: Number,
+  costoAtencion    :: Number
 } deriving Show
 
 -- type VisitaMedica = (DiasRecuperacion, CostoAtencion)
@@ -44,19 +42,9 @@ nombreFalopa animal = ((== 'i') . last . nombre) animal
 
 -- 2) ACTIVIDADES 
 
--- pipiPerro :: Animal
--- pipiPerro = Animal {
---     nombre  = "Pipi",
---     tipo    = "Perro",
---     peso    = 10,
---     edad    = 5,
---     enfermo = True,
---     diasRecuperacion = 5,
---     costoAtencion    = 5
--- }
 type Actividad = Animal -> Animal
 
-modificarPeso :: Peso -> Animal -> Animal
+modificarPeso :: Peso -> Actividad
 modificarPeso kilos animal = animal { peso = peso animal + kilos }
 
 
@@ -101,6 +89,18 @@ proceso :: Animal -> Proceso -> Animal
 proceso = foldr ($)
 
 {-
+-- pipiPerro :: Animal
+-- pipiPerro = Animal {
+--     nombre  = "Pipi",
+--     tipo    = "Perro",
+--     peso    = 10,
+--     edad    = 5,
+--     enfermo = True,
+--     diasRecuperacion = 5,
+--     costoAtencion    = 5
+-- }
+
+
 chequeoPesp 12 $ pipiPerro
 ...
 > proceso [chequeoPeso 12 . festejoCumple . revisacion 20 7 . engorde 10] pipiPerro                                                        10] pipiPerro     
