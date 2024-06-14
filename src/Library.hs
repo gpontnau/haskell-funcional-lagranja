@@ -5,22 +5,20 @@ import PdePreludat
 
 
 type Nombre = String
-type TipoAnimal = String
 type Peso = Number
 type Edad = Number
-type Enfermo = Bool
 type DiasRecuperacion = Number
 type CostoAtencion = Number
 
 data Animal = Animal {
   nombre  :: Nombre,
-  tipo    :: TipoAnimal,
+  tipo    :: String,
   peso    :: Peso,
   edad    :: Edad,
-  enfermo :: Enfermo,
+  enfermo :: Bool,
   -- diasRecuperacion :: DiasRecuperacion,
   -- costoAtencion    :: CostoAtencion
-  visitaMedica :: [VisitaMedica]
+  visita :: [VisitaMedica]
 } deriving Show
 
 data VisitaMedica = VisitaMedica {
@@ -34,7 +32,7 @@ data VisitaMedica = VisitaMedica {
 -- Verifica si un animal la pasó mal
 laPasoMal :: Animal -> Bool
 -- laPasoMal animal = ((> 30) . diasRecuperacion) animal
-laPasoMal animal = (any ((> 30) . diasRecuperacion) . visitaMedica) animal
+laPasoMal animal = (any ((> 30) . diasRecuperacion) . visita) animal
 
 
 
@@ -72,7 +70,7 @@ engorde alimentoBalanceado animal = modificarPeso (min 5 (alimentoBalanceado / 2
 -- Función para la revisación de un animal
 revisacion :: VisitaMedica -> Actividad
 revisacion visitaMedica animal
-  | enfermo animal = engorde 2 animal { visitasMedicas = visitasMedicas animal ++ [visitaMedica] } 
+  | enfermo animal = (engorde 2 animal) { visita = visita animal ++ [visitaMedica] } 
   | otherwise      = animal
 -- revisacion :: DiasRecuperacion -> CostoAtencion -> Actividad
 -- revisacion dias costo animal
@@ -82,7 +80,7 @@ revisacion visitaMedica animal
 
 -- Función para el festejo de cumpleaños de un animal
 festejoCumple :: Actividad
-festejoCumple animal = animal modificarPeso (-1) animal { edad = edad animal + 1 }
+festejoCumple animal = modificarPeso (-1) (animal { edad = edad animal + 1 })
                                                       --  peso = peso animal - 1 }
 
 -- -- Función para el chequeo de peso de un animal
@@ -127,7 +125,7 @@ Animal
 
 mejoraSustentablementePeso :: Actividad -> Animal -> Bool
 mejoraSustentablementePeso actividad animal = 
-    (peso . actividad) animal > peso animal peso
+    (peso . actividad) animal > peso animal 
     && (peso . actividad) animal < ((+3) . peso) animal
 
 mejora :: Proceso -> Animal -> Bool
